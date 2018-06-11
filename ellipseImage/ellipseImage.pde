@@ -1,7 +1,7 @@
 PImage img; 
 void setup() { 
   size(670, 443); 
-  frameRate(3000);
+  frameRate(60000);
   background(255); 
   img = loadImage("mount_fuji.jpg");
 } 

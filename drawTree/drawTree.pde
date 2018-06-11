@@ -20,17 +20,17 @@ void draw(){
 }
 
 void drawtree(int level, float length){
+  line(0,0,0,length);
   if(level == 0){
-    line(0,0,0,length);
     return;
   }
   
-  drawtree(--level,length);
+  //drawtree(--level,length);
   
   pushMatrix(); 
   rotate(PI/ 6); 
   translate(0, -length/3*2);
-  drawtree(level,length/3*2);
+  drawtree(--level,length/3*2);
   popMatrix();
   
   pushMatrix(); 
