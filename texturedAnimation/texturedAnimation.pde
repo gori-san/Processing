@@ -1,9 +1,10 @@
 float scale = 10, r = 300;;
 int z = 0, i = 1, j = 1, k=0, l = 2, m = 0;
 boolean isGrid = false, isAxis = false;
-
+PImage img;
 void setup(){
   size(800, 500, P3D);
+  img = loadImage("sand.jpg");
   noStroke();
 }
 
@@ -107,20 +108,20 @@ void drawCar3D(){
   //body
   fill(255, 0, 0);
   pushMatrix();
-    box(4*scale, 2*scale, 8*scale);
+    texturedBox(4*scale, 2*scale, 8*scale);
   popMatrix();
   pushMatrix();
     translate(0,1.5*scale,-scale);
-    box(4*scale,1.5*scale,6*scale);
+    texturedBox(4*scale,1.5*scale,6*scale);
   popMatrix();
   fill(255);
   pushMatrix();
     translate(0,1.2*scale,-scale);
-    box(3*scale,1.2*scale,6.1*scale);
+    texturedBox(3*scale,1.2*scale,6.1*scale);
   popMatrix();
   pushMatrix();
     translate(0,1.3*scale,-scale);
-    box(4.1*scale,scale*0.8,5*scale);
+    texturedBox(4.1*scale,scale*0.8,5*scale);
   popMatrix();
   
   
@@ -196,7 +197,7 @@ void axis(char s, color c){
   fill(c); stroke(c);
   pushMatrix();
     if(isAxis){
-      box(len, 1, 1);
+      texturedBox(len, 1, 1);
       pushMatrix();
         translate(len / 2, 0, 0);
         sphere(3);
@@ -249,9 +250,9 @@ void leaf(int r, int g, int b){
 }
 
 void leaves(){
-  pushMatrix(); translate(0, .5, 0); scale(.6, .6, .6); leaf(0, 224, 0); popMatrix();
-  pushMatrix(); translate(0, .25, 0); scale(.8, .8, .8); leaf(0, 192, 0); popMatrix();
-  leaf(0, 128, 0);
+  pushMatrix(); translate(0, .5, 0); scale(.6, .6, .6); texturedTriangle(0, 224, 0); popMatrix();
+  pushMatrix(); translate(0, .25, 0); scale(.8, .8, .8); texturedTriangle(0, 192, 0); popMatrix();
+  texturedTriangle(0, 128, 0);
 }
 
 void trunk(){
@@ -276,8 +277,47 @@ void drawHouse(){
   scale(100);
   pushMatrix();
   translate(0,0.3,0);
-  leaf(0,0,255);
+  texturedTriangle(0,0,255);
   popMatrix();
   fill(150,150,150);
-  box(0.6);
+  texturedBox(0.6,0.6,0.6);
+}
+
+void texturedBox(float x, float y, float z){
+  scale(x, y, z);
+  pushMatrix();
+    translate(-.5, -.5, -.5);
+    beginShape(QUADS);
+      texture(img);
+      textureMode(NORMAL);
+      vertex(0, 1, 0, 0, 0); vertex(0, 0, 0, 0, 1);
+        vertex(1, 0, 0, 1, 1); vertex(1, 1, 0, 1, 0);
+      vertex(1, 1, 0, 0, 0); vertex(1, 0, 0, 0, 1);
+        vertex(1, 0, 1, 1, 1); vertex(1, 1, 1, 1, 0);
+      vertex(1, 1, 1, 0, 0); vertex(1, 0, 1, 0, 1);
+        vertex(0, 0, 1, 1, 1); vertex(0, 1, 1, 1, 0);
+      vertex(0, 1, 1, 0, 0); vertex(0, 0, 1, 0, 1);
+        vertex(0, 0, 0, 1, 1); vertex(0, 1, 0, 1, 0);
+      vertex(0, 1, 1, 0, 0); vertex(0, 1, 0, 0, 1);
+        vertex(1, 1, 0, 1, 1); vertex(1, 1, 1, 1, 0);
+      vertex(0, 0, 0, 0, 0); vertex(0, 0, 1, 0, 1);
+        vertex(1, 0, 1, 1, 1); vertex(1, 0, 0, 1, 0);
+    endShape();
+  popMatrix();
+}
+
+void texturedTriangle(int x, int y, int z){
+  fill(x,y,z);
+  pushMatrix();
+    beginShape(TRIANGLES);
+    texture(img);
+    textureMode(NORMAL);
+    vertex(0, .5, 0, 0.5, 0); vertex(-.5, 0, -.5, 0, 1); vertex(.5, 0, -.5, 1,1);
+    vertex(0, .5, 0, 0.5, 0); vertex(.5, 0, -.5, 0, 1); vertex(.5, 0, .5, 1,1);
+    vertex(0, .5, 0, 0.5, 0); vertex(.5, 0, .5, 0, 1); vertex(-.5, 0, .5, 1,1);
+    vertex(0, .5, 0, 0.5, 0); vertex(-.5, 0, .5, 0, 1); vertex(-.5, 0, -.5, 1,1);
+    vertex(-.5, 0, -.5, 0.5, 0); vertex(.5, 0, .5, 0, 1); vertex(.5, 0, -.5, 1,1);
+    vertex(-.5, 0, -.5, 0.5, 0); vertex(-.5, 0, .5, 0, 1); vertex(.5, 0, .5, 1,1);
+    endShape();
+  popMatrix();
 }
